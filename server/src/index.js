@@ -1,7 +1,11 @@
+import path from 'path';
 import { fileURLToPath } from 'url';
 import { app, pool } from './app.js';
 
-const isMain = process.argv[1] === fileURLToPath(import.meta.url);
+const modulePath = fileURLToPath(import.meta.url);
+const isMain =
+  Boolean(process.argv[1]) &&
+  path.resolve(process.argv[1]) === path.resolve(modulePath);
 const PORT = Number(process.env.PORT) || 3001;
 
 async function start() {
@@ -22,7 +26,7 @@ async function start() {
   });
 }
 
-// Start only when run directly (keeps module import-safe for serverless platforms)
+// Local dev entry only — importing app.js (or this file from Vercel) must not listen.
 if (isMain) {
   start();
 }
