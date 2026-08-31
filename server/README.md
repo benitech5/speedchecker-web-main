@@ -66,6 +66,35 @@ npm run test:task3    # Task 3 trips + risk + summary
 - `docs/DEV1_HANDOFF.md` — frontend integration notes
 - `../docs/DEPLOYMENT.md` — production deployment guide
 
+## Vercel deployment (backend)
+
+Deploy as a **separate Vercel project** with **Root Directory** set to `server`.
+
+| Setting | Value |
+|---------|-------|
+| Root Directory | `server` |
+| Build Command | (empty) |
+| Entry point | `api/index.js` (Express app) |
+| Routing | `server/vercel.json` rewrites all paths to `/api` |
+
+**Environment variables:** `DATABASE_URL`, `DATABASE_SSL`, `CORS_ORIGIN`, `NODE_ENV`
+
+**Database setup (one-time, from your machine):**
+
+```bash
+cd server
+# Set DATABASE_URL in .env to your hosted PostgreSQL
+npm run db:reset    # schema + seed
+```
+
+Do **not** run migrations from serverless functions. Verify after deploy:
+
+```
+GET https://YOUR-BACKEND-PROJECT.vercel.app/api/health
+```
+
+See `../docs/DEPLOYMENT.md` for the full two-project deployment guide.
+
 ## Not included
 
 Authentication, push/email notifications, trained ML pipeline.

@@ -32,11 +32,12 @@ async function insertAlert(client, {
   message,
   latitude,
   longitude,
+  createdAt,
 }) {
   const { rows } = await client.query(
     `INSERT INTO alerts
-      (vehicle_id, trip_id, type, severity, message, latitude, longitude, acknowledged)
-     VALUES ($1, $2, $3, $4, $5, $6, $7, FALSE)
+      (vehicle_id, trip_id, type, severity, message, latitude, longitude, acknowledged, created_at)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, FALSE, $8)
      RETURNING
        id,
        vehicle_id AS "vehicleId",
@@ -48,7 +49,7 @@ async function insertAlert(client, {
        longitude,
        acknowledged,
        created_at AS "createdAt"`,
-    [vehicleId, tripId, type, severity, message, latitude, longitude],
+    [vehicleId, tripId, type, severity, message, latitude, longitude, createdAt.toISOString()],
   );
   return rows[0];
 }
@@ -97,6 +98,7 @@ export async function evaluateRules(client, ctx) {
             message: `${label} critical overspeed: ${speed.toFixed(1)} km/h (limit ${limit} km/h, threshold ${(criticalThreshold).toFixed(0)} km/h)`,
             latitude,
             longitude,
+            createdAt: recordedAt,
           });
           created.push(alert);
           await setState(client, vehicleId, tripId, critKey, { active: true, streak: 1 });
@@ -131,6 +133,7 @@ export async function evaluateRules(client, ctx) {
               message: `${label} overspeed: ${speed.toFixed(1)} km/h exceeded limit of ${limit} km/h`,
               latitude,
               longitude,
+              createdAt: recordedAt,
             });
             created.push(alert);
             await setState(client, vehicleId, tripId, warnKey, { active: true, streak: nextStreak });
@@ -169,6 +172,7 @@ export async function evaluateRules(client, ctx) {
             message: `${label} entered restricted zone "${g.name}"`,
             latitude,
             longitude,
+            createdAt: recordedAt,
           });
           created.push(alert);
           await setState(client, vehicleId, tripId, key, { active: true, streak: 1 });
@@ -193,6 +197,7 @@ export async function evaluateRules(client, ctx) {
           message: `${label} driving outside approved hours (Mon–Fri 08:00–18:00 GMT / ${FLEET_TIMEZONE})`,
           latitude,
           longitude,
+          createdAt: recordedAt,
         });
         created.push(alert);
         await setState(client, vehicleId, tripId, oohKey, { active: true, streak: 1 });
@@ -230,6 +235,7 @@ export async function evaluateRules(client, ctx) {
             message: `${label} route deviation: ${distRoute.toFixed(0)} m from "${route.name}" (limit ${ROUTE_DEVIATION_M} m)`,
             latitude,
             longitude,
+            createdAt: recordedAt,
           });
           created.push(alert);
           await setState(client, vehicleId, tripId, devKey, { active: true, streak: 1 });

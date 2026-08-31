@@ -1,11 +1,14 @@
 import * as mock from './mock.js';
 
-const USE_MOCK = import.meta.env.VITE_USE_MOCK !== 'false';
-const BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+// Mock mode is opt-in only (VITE_USE_MOCK=true). Production builds default to the real backend.
+const USE_MOCK = import.meta.env.VITE_USE_MOCK === 'true';
+const BASE =
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.DEV ? 'http://localhost:3001/api' : '/api');
 
 /**
- * When VITE_USE_MOCK=false, these paths use the real backend.
  * When VITE_USE_MOCK=true, all requests use src/api/mock.js (offline UI dev).
+ * Otherwise fleet features use the real backend at VITE_API_URL.
  */
 const LIVE_PATHS = [
   '/health',

@@ -102,7 +102,7 @@ Unknown routes redirect to Dashboard.
 | Variable | Example | Purpose |
 |----------|---------|---------|
 | `VITE_API_URL` | `http://localhost:3001/api` | Backend base URL |
-| `VITE_USE_MOCK` | `false` | `true` = mock data only; `false` = real API |
+| `VITE_USE_MOCK` | `false` | `true` = mock data only; omit or `false` = real API |
 
 ### Backend (`server/.env`)
 
@@ -110,7 +110,9 @@ Unknown routes redirect to Dashboard.
 |----------|---------|---------|
 | `DATABASE_URL` | `postgresql://user:pass@localhost:5433/fleet_monitor` | PostgreSQL connection |
 | `PORT` | `3001` | API port |
-| `CORS_ORIGIN` | `http://localhost:5173` | Allowed frontend origin(s) |
+| `CORS_ORIGIN` | `http://localhost:5173` | Allowed frontend origin(s), comma-separated |
+| `DATABASE_SSL` | `false` | Set `true` for hosted Postgres requiring TLS |
+| `NODE_ENV` | `development` | `production` on Vercel |
 
 **Never commit `.env` files or expose database credentials to the frontend.**
 
@@ -168,3 +170,79 @@ Backend scripts are in `server/package.json` (`db:reset`, `test:rules`, `test:ta
 ## Note
 
 This product is for operational monitoring and university project demos. GPS estimates can vary; do not treat the app as a legal speedometer or sole compliance system.
+
+## Vercel Deployment
+
+Deploy as **two separate Vercel projects** from this repository.
+
+### Frontend deployment
+
+1. In Vercel, click **Add New → Project** and import this repository.
+2. **Project name:** e.g. `speedchecker-frontend`
+3. **Root Directory:** leave as repository root (`.`)
+4. **Framework Preset:** Vite (auto-detected)
+5. **Build Command:** `npm run build`
+6. **Output Directory:** `dist`
+7. **Environment Variables** (Production + Preview):
+   - `VITE_API_URL` = `https://YOUR-BACKEND-PROJECT.vercel.app/api`
+   - `VITE_USE_MOCK` = `false`
+8. Deploy. Copy the deployment URL (e.g. `https://speedchecker-frontend.vercel.app`).
+
+### Backend deployment
+
+1. Create a **second** Vercel project from the same repository.
+2. **Project name:** e.g. `speedchecker-backend`
+3. **Root Directory:** `server`
+4. **Framework Preset:** Other
+5. **Build Command:** leave empty
+6. **Environment Variables** (Production + Preview):
+   - `DATABASE_URL` = your hosted PostgreSQL connection string
+   - `DATABASE_SSL` = `true` (if provider requires SSL and URL has no `sslmode=require`)
+   - `CORS_ORIGIN` = `https://YOUR-FRONTEND-PROJECT.vercel.app`
+   - `NODE_ENV` = `production`
+7. Deploy. Verify: `GET https://YOUR-BACKEND-PROJECT.vercel.app/api/health`
+
+### PostgreSQL
+
+1. Create a hosted PostgreSQL database (Neon, Supabase, Render, etc.).
+2. Set `DATABASE_URL` in the **backend** Vercel project.
+3. Initialize schema once from your machine:
+   ```bash
+   cd server
+   # DATABASE_URL in server/.env pointing to hosted DB
+   npm run db:reset
+   ```
+
+### Connecting frontend to backend
+
+After both projects deploy:
+
+1. Set frontend `VITE_API_URL` to `https://YOUR-BACKEND-PROJECT.vercel.app/api`
+2. Set backend `CORS_ORIGIN` to `https://YOUR-FRONTEND-PROJECT.vercel.app`
+3. **Redeploy both** after updating environment variables (frontend vars are build-time).
+
+### Deployment checklist
+
+```
+[ ] PostgreSQL production database created
+[ ] Database schema initialized
+[ ] Backend deployed to Vercel (root = server)
+[ ] Backend /api/health works
+[ ] Backend database connection works
+[ ] Frontend deployed to Vercel (repo root)
+[ ] VITE_API_URL configured
+[ ] CORS_ORIGIN configured
+[ ] Frontend loads
+[ ] Dashboard works
+[ ] Map works
+[ ] Alerts work
+[ ] Trips work
+[ ] Trip details work
+[ ] Simulator works
+[ ] Risk scoring works
+[ ] Weekly summary works
+[ ] No localhost production URLs
+[ ] No secrets committed
+```
+
+Full details: `docs/DEPLOYMENT.md`
