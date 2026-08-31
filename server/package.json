@@ -1,0 +1,24 @@
+{
+  "name": "smartstart-fleet-server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/index.js",
+    "start": "node src/index.js",
+    "db:setup": "node scripts/setup-db.js",
+    "db:seed": "node scripts/seed.js",
+    "db:reset": "node scripts/setup-db.js && node scripts/seed.js",
+    "db:migrate:task2": "node scripts/migrate-task2.js",
+    "db:migrate:task3": "node scripts/migrate-task3.js",
+    "smoke:haversine": "node scripts/smoke-haversine.js",
+    "test:rules": "node scripts/test-rules.js",
+    "test:task3": "node scripts/test-task3.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "pg": "^8.13.3"
+  }
+}
