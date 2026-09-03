@@ -18,7 +18,7 @@ const WelcomeScreen = ({ navigation }) => {
       {/* Welcome Text */}
       <View style={styles.textWrapper}>
         <Text style={styles.title}>Welcome to</Text>
-        <Text style={styles.appName}>SmartStart Speed Checker</Text>
+        <Text style={styles.appName}>FleetMonitor Speed Checker</Text>
         <Text style={styles.subtitle}>
           OVERSPEEDING kills. The best app developed for you to help check overspeeding.
         </Text>
@@ -26,8 +26,8 @@ const WelcomeScreen = ({ navigation }) => {
 
       {/* Information Text */}
       <View style={styles.infoWrapper}>
-        <Text style={styles.infoText}>
-          SmartStart is an app that’s developed to check speed of moving vehicles and detect overspeeding. However this app might not be 100% accurate. This app uses GPS and location services to check speed and therefore requires good internet connectivity.
+          <Text style={styles.infoText}>
+          FleetMonitor is an app that’s developed to check speed of moving vehicles and detect overspeeding. However this app might not be 100% accurate. This app uses GPS and location services to check speed and therefore requires good internet connectivity.
         </Text>
         <TouchableOpacity onPress={handleLinkPress}>
           <Text style={styles.linkText}>press to read and know more...</Text>

@@ -9,14 +9,14 @@ function WelcomeScreen({ onContinue }) {
       <div className="brand-mark" aria-hidden="true"><span>↗</span></div>
       <section className="welcome-copy">
         <p className="eyebrow">SAFER JOURNEYS START HERE</p>
-        <h1>Welcome to <strong>SmartStart</strong></h1>
+        <h1>Welcome to <strong>FleetMonitor</strong></h1>
         <p className="lead">Your live speed companion for calmer, safer driving.</p>
       </section>
       <section className="notice-card">
         <span className="notice-icon" aria-hidden="true">i</span>
         <div>
           <h2>Before you begin</h2>
-          <p>SmartStart uses your device’s GPS to estimate vehicle speed and detect overspeeding. GPS readings can vary, so never rely on this app instead of your vehicle’s speedometer.</p>
+          <p>FleetMonitor uses your device’s GPS to estimate vehicle speed and detect overspeeding. GPS readings can vary, so never rely on this app instead of your vehicle’s speedometer.</p>
           <a href="https://www.example.com/more-info" target="_blank" rel="noreferrer">Read more about safe use <span>↗</span></a>
         </div>
       </section>
@@ -52,7 +52,7 @@ function SetupScreen({ onStart, onBack }) {
     <main className="setup page dark-page">
       <header className="topbar">
         <button className="icon-button" onClick={onBack} aria-label="Go back">←</button>
-        <div className="mini-brand"><span className="mini-mark">↗</span><span>SmartStart</span></div>
+        <div className="mini-brand"><span className="mini-mark">↗</span><span>FleetMonitor</span></div>
         <span className="step">SETUP</span>
       </header>
       <section className="setup-heading">
@@ -80,7 +80,7 @@ function SetupScreen({ onStart, onBack }) {
         {mode === 'personalized' && <label><span>Custom speed limit</span><div className="unit-input"><input type="number" min="1" max="160" value={speedLimit} onChange={(e) => setSpeedLimit(e.target.value)} placeholder="80"/><span>km/h</span></div></label>}
         {error && <p className="form-error" role="alert">{error}</p>}
         <button className="primary-button" type="submit">Start speed check <span>→</span></button>
-        <p className="legal">Only use SmartStart when your device is safely mounted. Do not interact with it while driving.</p>
+        <p className="legal">Only use FleetMonitor when your device is safely mounted. Do not interact with it while driving.</p>
       </form>
     </main>
   );
@@ -183,7 +183,7 @@ function CheckerScreen({ trip, onExit }) {
 
   const downloadLogs = () => {
     const rows = logs.map((log) => `<tr><td>${log.time}</td><td>${log.distance.toFixed(3)}</td><td>${log.speed.toFixed(1)}</td><td>${log.overspeed ? 'Yes' : 'No'}</td></tr>`).join('');
-    const report = `<!doctype html><html><head><title>SmartStart Speed Logs</title><style>body{font-family:Arial;padding:32px;color:#18181b}h1{color:${PINK}}table{width:100%;border-collapse:collapse}th,td{padding:10px;border:1px solid #ddd;text-align:left}@media print{button{display:none}}</style></head><body><h1>SmartStart Speed Logs</h1><p><b>Driver:</b> ${trip.driverName}</p><p><b>Vehicle:</b> ${trip.carNumber}</p><p><b>Sex:</b> ${trip.driverSex || 'Not specified'}</p><p><b>Speed limit:</b> ${trip.speedLimit} km/h</p><table><thead><tr><th>Time</th><th>Distance (km)</th><th>Speed (km/h)</th><th>Overspeed</th></tr></thead><tbody>${rows || '<tr><td colspan="4">No readings recorded</td></tr>'}</tbody></table><script>window.onload=()=>window.print()<\/script></body></html>`;
+    const report = `<!doctype html><html><head><title>FleetMonitor Speed Logs</title><style>body{font-family:Arial;padding:32px;color:#18181b}h1{color:${PINK}}table{width:100%;border-collapse:collapse}th,td{padding:10px;border:1px solid #ddd;text-align:left}@media print{button{display:none}}</style></head><body><h1>FleetMonitor Speed Logs</h1><p><b>Driver:</b> ${trip.driverName}</p><p><b>Vehicle:</b> ${trip.carNumber}</p><p><b>Sex:</b> ${trip.driverSex || 'Not specified'}</p><p><b>Speed limit:</b> ${trip.speedLimit} km/h</p><table><thead><tr><th>Time</th><th>Distance (km)</th><th>Speed (km/h)</th><th>Overspeed</th></tr></thead><tbody>${rows || '<tr><td colspan="4">No readings recorded</td></tr>'}</tbody></table><script>window.onload=()=>window.print()<\/script></body></html>`;
     const printWindow = window.open('', '_blank');
     if (!printWindow) { window.alert('Allow pop-ups to download or print the report.'); return; }
     printWindow.document.write(report); printWindow.document.close();
@@ -192,7 +192,7 @@ function CheckerScreen({ trip, onExit }) {
   const timer = `${String(Math.floor(seconds / 60)).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
   return (
     <main className="checker page">
-      <header className="checker-header"><div className="mini-brand"><span className="mini-mark">↗</span><span>SmartStart</span></div><span className={`status ${status}`}>● {message}</span></header>
+      <header className="checker-header"><div className="mini-brand"><span className="mini-mark">↗</span><span>FleetMonitor</span></div><span className={`status ${status}`}>● {message}</span></header>
       <section className="dashboard">
         <div className="trip-summary"><div><p>DRIVER</p><strong>{trip.driverName}</strong></div><div><p>VEHICLE</p><strong>{trip.carNumber}</strong></div><div><p>LIMIT</p><strong>{trip.speedLimit} km/h</strong></div><div><p>SESSION</p><strong>{timer}</strong></div></div>
         <section className={`speed-panel ${overspeed ? 'over' : ''}`}>

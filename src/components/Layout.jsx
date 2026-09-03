@@ -15,7 +15,7 @@ export default function Layout() {
         <div className="fleet-brand">
           <span className="mini-mark">↗</span>
           <div>
-            <strong>SmartStart</strong>
+            <strong>FleetMonitor</strong>
             <small>Fleet Monitor</small>
           </div>
         </div>

@@ -71,7 +71,7 @@ const HomeScreen = ({ navigation }) => {
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.innerContainer}>
-          <Text style={styles.appName}>SmartStart Speed Checker</Text>
+          <Text style={styles.appName}>FleetMonitor Speed Checker</Text>
           <View style={styles.formContainer}>
             <TextInput
               style={styles.input}

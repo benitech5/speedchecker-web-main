@@ -332,7 +332,7 @@ const CheckerScreen = ({ route }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.appName}>SmartStart Speed Checker</Text>
+        <Text style={styles.appName}>FleetMonitor Speed Checker</Text>
       </View>
       <View style={styles.formContainer}>
         <Text style={styles.paragraph}>{text}</Text>

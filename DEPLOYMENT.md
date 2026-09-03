@@ -1,6 +1,6 @@
 # GitHub Repository Setup Guide
 
-This guide will help you push your SmartStart Speed Checker project to GitHub for the first time.
+This guide will help you push your FleetMonitor Speed Checker project to GitHub for the first time.
 
 ## 📋 Prerequisites
 
@@ -16,7 +16,7 @@ This guide will help you push your SmartStart Speed Checker project to GitHub fo
 2. Click the **"+"** icon in the top right corner
 3. Select **"New repository"**
 4. Fill in the repository details:
-   - **Repository name**: `smartstart-speed-checker` (or your preferred name)
+   - **Repository name**: `fleetmonitor-speed-checker` (or your preferred name)
    - **Description**: `A React Native mobile app for real-time GPS speed monitoring with overspeed alerts`
    - **Visibility**: Choose Public or Private
    - **⚠️ IMPORTANT**: Do NOT initialize with README, .gitignore, or license (we already have these)
@@ -24,16 +24,16 @@ This guide will help you push your SmartStart Speed Checker project to GitHub fo
 
 ### 2. Link Your Local Repository to GitHub
 
-Copy the repository URL from GitHub (should look like `https://github.com/yourusername/smartstart-speed-checker.git`)
+Copy the repository URL from GitHub (should look like `https://github.com/yourusername/fleetmonitor-speed-checker.git`)
 
 Then run these commands in your terminal:
 
 ```bash
 # Navigate to your project directory
-cd "c:\Users\Arthitude\Desktop\mini project\Smartstart"
+cd "c:\Users\Arthitude\Desktop\mini project\FleetMonitor"
 
 # Add GitHub as the remote origin
-git remote add origin https://github.com/yourusername/smartstart-speed-checker.git
+git remote add origin https://github.com/yourusername/fleetmonitor-speed-checker.git
 
 # Verify the remote was added
 git remote -v
@@ -121,4 +121,4 @@ If you get file size warnings:
 
 ---
 
-**Ready to go live!** 🚀 Your SmartStart Speed Checker is now ready for GitHub!
+**Ready to go live!** 🚀 Your FleetMonitor Speed Checker is now ready for GitHub!

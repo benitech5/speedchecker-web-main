@@ -1,4 +1,4 @@
-# SmartStart Fleet Monitor
+# FleetMonitor Fleet Monitor
 
 A **web-based fleet monitoring system** for company vehicles in Kumasi, Ghana. Managers view live vehicle positions, safety alerts, trip history, and AI-assisted risk labels from a React dashboard. GPS input for demos comes from a built-in simulator that posts to the real backend API.
 
